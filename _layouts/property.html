@@ -1,0 +1,25 @@
+---
+layout: default
+---
+
+{{ page.rdf }}
+
+<h2>{{ page.rdf | rdf_property: "rdfs:label" }}</h2>
+
+<p>{{ page.rdf | rdf_property: "rdfs:comment" }}</p>
+
+{% assign same_as = page.rdf | rdf_property: "orkgp:SAME_AS", nil, true %}
+<ul>
+{% for same in same_as %}
+<li>{{ same }} {{ same | rdf_property: "rdfs:label" }}</li>
+{% endfor %}
+</ul>
+{% assign property_shapes = page.rdf | rdf_inverse_property: "shacl:path", true %}
+{% for property_shape in property_shapes %}
+{% assign shapes = property_shape | rdf_inverse_property: "shacl:property", true %}
+<ul>
+{% for shape in shapes %}
+<li>{{ shapes }} {{ shapes.page_url }}</li>
+{% endfor %}
+</ul>
+{% endfor %}

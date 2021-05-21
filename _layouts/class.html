@@ -1,0 +1,21 @@
+---
+layout: default
+---
+
+{{ page.rdf }}
+
+<h2>{{ page.rdf | rdf_property: "rdfs:label" }}</h2>
+
+{% assign equivalentClass = page.rdf | rdf_property: "owl:equivalentClass", nil, true %}
+<ul>
+{% for equivalent in equivalentClass %}
+<li>{{ equivalent }} {{ equivalent | rdf_property: "rdfs:label" }}</li>
+{% endfor %}
+</ul>
+
+{% assign shapes = page.rdf | rdf_inverse_property: "shacl:targetClass", true %}
+<ul>
+{% for shape in shapes %}
+<li>{{ shapes }} {{ shapes.page_url }}</li>
+{% endfor %}
+</ul>

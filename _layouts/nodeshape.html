@@ -1,0 +1,26 @@
+---
+layout: default
+---
+
+{{ page.rdf }}
+
+<dl>
+  <dt>nodeKinde</dt>
+  <dd></dd>
+  <dt>targetClass</dt>
+  <dd></dd>
+  <dt>properties</dt>
+  {% assign properties = page.rdf | rdf_property: "shacl:property", nil, true %}
+  <dd>
+    <ul>
+    {% for property_shape in properties %}
+    <li>{{ property_shape }}
+      {{ property_shape | rdf_property: "shacl:nodeKind" }}
+      {{ property_shape | rdf_property: "shacl:path" }}
+      {{ property_shape | rdf_property: "shacl:datatype" }}
+      {{ property_shape | rdf_property: "shacl:class" }}
+    </li>
+    {% endfor %}
+    </ul>
+  </dd>
+</dl>
