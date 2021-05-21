@@ -1,26 +1,43 @@
 ---
 layout: default
+rdf_prefix_path: "_data/prefixes.sparql"
 ---
 
-{{ page.rdf }}
+go to ORKG: <a href="{{ page.rdf }}">{{ page.rdf }}</a>
+
+{% assign targetClass = page.rdf | rdf_property: "shacl:targetClass" %}
 
 <dl>
   <dt>nodeKinde</dt>
-  <dd></dd>
+  <dd>{{ page.rdf | rdf_property: "shacl:nodeKind" }}</dd>
   <dt>targetClass</dt>
-  <dd></dd>
-  <dt>properties</dt>
-  {% assign properties = page.rdf | rdf_property: "shacl:property", nil, true %}
-  <dd>
-    <ul>
-    {% for property_shape in properties %}
-    <li>{{ property_shape }}
-      {{ property_shape | rdf_property: "shacl:nodeKind" }}
-      {{ property_shape | rdf_property: "shacl:path" }}
-      {{ property_shape | rdf_property: "shacl:datatype" }}
-      {{ property_shape | rdf_property: "shacl:class" }}
-    </li>
-    {% endfor %}
-    </ul>
-  </dd>
+  <dd><a href="{{targetClass.render_path | relativize_url}}">{{ targetClass | rdf_property: "rdfs:label" }} ({{ targetClass.iri }})</a></dd>
 </dl>
+<strong>properties</strong>
+{% assign properties = page.rdf | rdf_property: "shacl:property", nil, true %}
+<table>
+  <tr>
+    <th>
+      property (shacl:path)
+    </th>
+    <th>
+      shacl:nodeKind
+    </th>
+    <th>
+      shacl:datatype (Literal)
+    </th>
+    <th>
+      shacl:class (IRI)
+    </th>
+  </tr>
+  {% for property_shape in properties %}
+  {% assign path = property_shape | rdf_property: "shacl:path" %}
+  {% assign class = property_shape | rdf_property: "shacl:class" %}
+  <tr>
+    <td><a href="{{path.render_path | relativize_url}}">{{ path | rdf_property: "rdfs:label" }} ({{ path.iri | replace: "http://orkg.org/orkg/predicate/", "orkgp:" }})</a></td>
+    <td>{{ property_shape | rdf_property: "shacl:nodeKind" | replace: "http://www.w3.org/ns/shacl#", "shacl:"}}</td>
+    <td>{{ property_shape | rdf_property: "shacl:datatype" | replace: "http://www.w3.org/2001/XMLSchema#", "xsd:"}}</td>
+    <td>{% if class %}<a href="{{class.render_path | relativize_url}}">{{ class | rdf_property: "rdfs:label" }} ({{ class.iri }}){% endif %}</a></td>
+  </tr>
+  {% endfor %}
+</table>

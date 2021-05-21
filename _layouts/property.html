@@ -1,8 +1,9 @@
 ---
 layout: default
+rdf_prefix_path: "_data/prefixes.sparql"
 ---
 
-{{ page.rdf }}
+go to ORKG: <a href="{{ page.rdf }}">{{ page.rdf }}</a>
 
 <h2>{{ page.rdf | rdf_property: "rdfs:label" }}</h2>
 
@@ -11,7 +12,11 @@ layout: default
 {% assign same_as = page.rdf | rdf_property: "orkgp:SAME_AS", nil, true %}
 <ul>
 {% for same in same_as %}
-<li>{{ same }} {{ same | rdf_property: "rdfs:label" }}</li>
+{% if same.iri %}
+<li><a href="{{same.render_path | relativize_url}}">{{ same | rdf_property: "rdfs:label" }} ({{ same.iri }})</a></li>
+{% else %}
+<li>{{ same }}</li>
+{% endif %}
 {% endfor %}
 </ul>
 {% assign property_shapes = page.rdf | rdf_inverse_property: "shacl:path", true %}
@@ -19,7 +24,7 @@ layout: default
 {% assign shapes = property_shape | rdf_inverse_property: "shacl:property", true %}
 <ul>
 {% for shape in shapes %}
-<li>{{ shapes }} {{ shapes.page_url }}</li>
+<li><a href="{{shape.render_path | relativize_url}}">{{ shape.iri }}</a></li>
 {% endfor %}
 </ul>
 {% endfor %}

@@ -1,21 +1,29 @@
 ---
 layout: default
+rdf_prefix_path: "_data/prefixes.sparql"
 ---
 
-{{ page.rdf }}
+go to ORKG: <a href="{{ page.rdf }}">{{ page.rdf }}</a>
 
 <h2>{{ page.rdf | rdf_property: "rdfs:label" }}</h2>
 
 {% assign equivalentClass = page.rdf | rdf_property: "owl:equivalentClass", nil, true %}
+<strong>equivalentClass</strong>
 <ul>
 {% for equivalent in equivalentClass %}
-<li>{{ equivalent }} {{ equivalent | rdf_property: "rdfs:label" }}</li>
+{% if equivalent.iri %}
+<li><a href="{{equivalent.render_path | relativize_url}}">{{ equivalent | rdf_property: "rdfs:label" }} ({{ equivalent.iri }})</a></li>
+{% else %}
+<li>{{ equivalent }}</li>
+{% endif %}
 {% endfor %}
 </ul>
 
+<strong>Node Shapes</strong>
+<p>Node Shapes including this class</p>
 {% assign shapes = page.rdf | rdf_inverse_property: "shacl:targetClass", true %}
 <ul>
 {% for shape in shapes %}
-<li>{{ shapes }} {{ shapes.page_url }}</li>
+<li><a href="{{shape.render_path | relativize_url}}">{{ shape.iri }}</a></li>
 {% endfor %}
 </ul>

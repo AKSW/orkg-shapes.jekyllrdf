@@ -1,0 +1,21 @@
+---
+layout: default
+rdf_prefix_path: "_data/prefixes.sparql"
+---
+
+{% capture query %}
+select distinct ?term {
+  {
+    ?term a rdfs:Class
+  } union {
+    ?term a rdf:Property
+  }
+} order by ?term
+{% endcapture %}
+
+{% assign resultset = page.rdf | sparql_query: query %}
+<ul>
+{% for result in resultset %}
+  <li><a href="{{ result.term.page_url | relativize_url }}">{{ result.term }}</a></li>
+{% endfor %}
+</ul>

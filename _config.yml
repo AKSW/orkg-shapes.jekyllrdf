@@ -1,4 +1,4 @@
-baseurl: "/orkg" # the subpath of your site, e.g. /blog
+baseurl: "/" # the subpath of your site, e.g. /blog
 url: "http://orkg.org" # the base hostname & protocol for your site, e.g. http://example.com
 # rootresource: "<http://aksw.org/>"
 title: "ORKG Shapes"
@@ -13,8 +13,8 @@ jekyll_rdf:
     # path: "_data/graph.nt"
     remote:
       endpoint: "http://fuseki:3030/orkg"
-    restriction: "SELECT ?resourceUri WHERE { ?resourceUri ?p ?o . FILTER regex(str(?resourceUri), \"http://orkg.org/orkg/\") }"
-    default_template: "resource"
+    restriction: "SELECT ?resourceUri WHERE { ?resourceUri ?p ?o ; a ?class . filter (?class in (<http://www.w3.org/2000/01/rdf-schema#Class>, <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property>, <http://www.w3.org/ns/shacl#NodeShape>)) FILTER regex(str(?resourceUri), \"http://orkg.org/orkg/\") }"
+    #default_template: "resource"
     class_template_mappings:
         "http://www.w3.org/2000/01/rdf-schema#Class": "class"
         "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property": "property"
