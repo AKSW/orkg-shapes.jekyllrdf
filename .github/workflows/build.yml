@@ -21,7 +21,7 @@ jobs:
     - name: Create docker network 🖧
       run: docker network create data
     - name: Run Triple Store 📑
-      run: docker run -v ${{ github.workspace }}/orkg-shapes:/staging --network data --name fuseki -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/orkg-shapes.nt /orkg/shapes
+      run: docker run -v ${{ github.workspace }}/orkg-shapes:/staging --network data --name fuseki -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/orkg-shapes.nt /orkg-shapes
     # - name: Provide JavaScript Dependencies 🚚
     #   run: |
     #        npm install
