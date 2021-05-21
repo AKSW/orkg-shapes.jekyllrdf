@@ -1,0 +1,29 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX orkgp: <http://orkg.org/orkg/predicate/>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT {
+?predicate a rdf:Property, ?precicateType ;
+  rdfs:label ?predicateLabel ;
+  rdfs:comment ?predicateDescription ;
+  orkgp:SAME_AS ?predicateSameAs .
+}
+WHERE {
+# GRAPH <http://orkg.org/orkg/> {
+    [] ?predicate []
+    optional {
+      ?predicate a ?precicateType .
+    }
+    optional {
+      ?predicate rdfs:label ?predicateLabel .
+    }
+    optional {
+      ?predicate orkgp:description ?predicateDescription .
+    }
+    optional {
+      ?predicate orkgp:SAME_AS ?predicateSameAs .
+    }
+# }
+}

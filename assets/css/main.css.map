@@ -1,0 +1,14 @@
+{
+	"version": 3,
+	"file": "main.css",
+	"sources": [
+		"main.scss",
+		"_sass/default.scss"
+	],
+	"sourcesContent": [
+		"@import \"default\";\n\n.content {\n  width: 45rem;\n  margin: 0 auto;\n}\n",
+		"// This is a partial.\n// It lies in <source>/_sass, just waiting to be imported.\n// It does not contain the YAML front matter and has no corresponding output file in the built site.\n\nbody {\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\";\n  font-size: 18px;\n  line-height: 1.5;\n  color: #24292e;\n  background-color: #fff;\n}\n\na {\n  color: #0366d6;\n}\n\ncode,\npre {\n  font-family: Menlo, Consolas, \"Consolas for Powerline\", \"Courier New\", Courier, monospace;\n  background-color: #2b2b2b;\n  color: #fff;\n  padding: 0.25em\n}\n"
+	],
+	"names": [],
+	"mappings": "ACIA,AAAA,IAAI,CAAC,EACH,WAAW,EAAE,6HAA6H,EAC1I,SAAS,EAAE,IAAI,EACf,WAAW,EAAE,GAAG,EAChB,KAAK,EAAE,OAAO,EACd,gBAAgB,EAAE,IAAI,GACvB;;AAED,AAAA,CAAC,CAAC,EACA,KAAK,EAAE,OAAO,GACf;;AAED,AAAA,IAAI,EACJ,GAAG,CAAC,EACF,WAAW,EAAE,4EAA4E,EACzF,gBAAgB,EAAE,OAAO,EACzB,KAAK,EAAE,IAAI,EACX,OAAO,EAAE,MACX,GAAC;;ADpBD,AAAA,QAAQ,CAAC,EACP,KAAK,EAAE,KAAK,EACZ,MAAM,EAAE,MAAM,GACf"
+}
