@@ -2,6 +2,8 @@ baseurl: "/" # the subpath of your site, e.g. /blog
 url: "http://orkg.org" # the base hostname & protocol for your site, e.g. http://example.com
 # rootresource: "<http://aksw.org/>"
 title: "ORKG Shapes"
+github_jekyll: "https://github.com/AKSW/orkg-shapes.jekyllrdf"
+github_shapes: "https://github.com/AKSW/orkg-shapes"
 
 plugins:
    - jekyll-rdf
