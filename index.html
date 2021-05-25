@@ -3,19 +3,56 @@ layout: default
 rdf_prefix_path: "_data/prefixes.sparql"
 ---
 
-{% capture query %}
+{% capture class_query %}
 select distinct ?term {
-  {
-    ?term a rdfs:Class
-  } union {
-    ?term a rdf:Property
-  }
+  ?term a rdfs:Class
 } order by ?term
 {% endcapture %}
 
-{% assign resultset = page.rdf | sparql_query: query %}
+{% capture property_query %}
+select distinct ?term {
+  ?term a rdf:Property
+} order by ?term
+{% endcapture %}
+
+{% capture nodeshape_query %}
+select distinct ?term {
+  ?term a shacl:NodeShape
+} order by ?term
+{% endcapture %}
+
+<ul>
+  <li><a href="#classes">Classes</a></li>
+  <li><a href="#properties">Properties</a></li>
+  <li><a href="#nodeshapes">NodeShapes</a></li>
+</ul>
+
+<pre>
+  @prefix orkgc: <http://orkg.org/orkg/class/> .
+  @prefix orkgp: <http://orkg.org/orkg/predicate/> .
+  @prefix orkgsh: <http://orkg.org/orkg/shapes/> .
+</pre>
+
+{% assign resultset = page.rdf | sparql_query: class_query %}
+<h2 id="classes">Classes</h2>
 <ul>
 {% for result in resultset %}
-  <li><a href="{{ result.term.page_url | relativize_url }}">{{ result.term }}</a></li>
+  <li><a href="{{ result.term.page_url | relativize_url }}">{{result.term | rdf_property: "rdfs:label"}} ({{ result.term | replace: "http://orkg.org/orkg/class/", "orkgc:" }})</a></li>
+{% endfor %}
+</ul>
+
+{% assign resultset = page.rdf | sparql_query: property_query %}
+<h2 id="properties">Properties</h2>
+<ul>
+{% for result in resultset %}
+  <li><a href="{{ result.term.page_url | relativize_url }}">{{result.term | rdf_property: "rdfs:label"}} ({{ result.term | replace: "http://orkg.org/orkg/predicate/", "orkgp:" }})</a></li>
+{% endfor %}
+</ul>
+
+{% assign resultset = page.rdf | sparql_query: nodeshape_query %}
+<h2 id="nodeshapes">NodeShapes</h2>
+<ul>
+{% for result in resultset %}
+  <li><a href="{{ result.term.page_url | relativize_url }}">({{ result.term | replace: "http://orkg.org/orkg/shapes/", "orkgsh:" }})</a></li>
 {% endfor %}
 </ul>
