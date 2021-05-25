@@ -28,9 +28,9 @@ select distinct ?term {
 </ul>
 
 <pre>
-  @prefix orkgc: <http://orkg.org/orkg/class/> .
-  @prefix orkgp: <http://orkg.org/orkg/predicate/> .
-  @prefix orkgsh: <http://orkg.org/orkg/shapes/> .
+  @prefix orkgc: &lt;http://orkg.org/orkg/class/&gt; .
+  @prefix orkgp: &lt;http://orkg.org/orkg/predicate/&gt; .
+  @prefix orkgsh: &lt;http://orkg.org/orkg/shapes/&gt; .
 </pre>
 
 {% assign resultset = page.rdf | sparql_query: class_query %}
