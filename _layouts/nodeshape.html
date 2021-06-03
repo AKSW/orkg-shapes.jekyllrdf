@@ -46,10 +46,12 @@ go to ORKG: <a href="{{ page.rdf }}">{{ page.rdf }}</a>
     <td>
       {% if class %}<a href="{{class.render_path | relativize_url}}">{{ class | rdf_property: "rdfs:label" }} ({{ class.iri }}){% endif %}</a>
       {% if alternatives %}
+      <ul>
       {% for alt in alternatives %}
       {% assign class = alt | rdf_property: "shacl:class" %}
-      {% if class %}<a href="{{class.render_path | relativize_url}}">{{ class | rdf_property: "rdfs:label" }} ({{ class.iri }}){% endif %}</a>{% unless forloop.last %}, {% endunless %}
+      {% if class %}<li><a href="{{class.render_path | relativize_url}}">{{ class | rdf_property: "rdfs:label" }} ({{ class.iri }}){% endif %}</a>{% unless forloop.last %}</li>
       {% endfor %}
+      </ul>
       {% endif %}
     </td>
   </tr>
