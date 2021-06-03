@@ -32,12 +32,26 @@ go to ORKG: <a href="{{ page.rdf }}">{{ page.rdf }}</a>
   </tr>
   {% for property_shape in properties %}
   {% assign path = property_shape | rdf_property: "shacl:path" %}
+  <!-- the alternatives with shacl:or are not jet implemented completely -->
+  {% assign or = property_shape | rdf_property: "shacl:or" %}
+  {% if or %}
+  {% assign alternatives = property_shape | rdf_collection: "shacl:or" %}
+  {% else %}
   {% assign class = property_shape | rdf_property: "shacl:class" %}
+  {% endif %}
   <tr>
     <td><a href="{{path.render_path | relativize_url}}">{{ path | rdf_property: "rdfs:label" }} ({{ path.iri | replace: "http://orkg.org/orkg/predicate/", "orkgp:" }})</a></td>
     <td>{{ property_shape | rdf_property: "shacl:nodeKind" | replace: "http://www.w3.org/ns/shacl#", "shacl:"}}</td>
     <td>{{ property_shape | rdf_property: "shacl:datatype" | replace: "http://www.w3.org/2001/XMLSchema#", "xsd:"}}</td>
-    <td>{% if class %}<a href="{{class.render_path | relativize_url}}">{{ class | rdf_property: "rdfs:label" }} ({{ class.iri }}){% endif %}</a></td>
+    <td>
+      {% if class %}<a href="{{class.render_path | relativize_url}}">{{ class | rdf_property: "rdfs:label" }} ({{ class.iri }}){% endif %}</a>
+      {% if alternatives %}
+      {% for alt in alternatives %}
+      {% assign class = alt | rdf_property: "shacl:class" %}
+      {% if class %}<a href="{{class.render_path | relativize_url}}">{{ class | rdf_property: "rdfs:label" }} ({{ class.iri }}){% endif %}</a>{% unless forloop.last %}, {% endunless %}
+      {% endfor %}
+      {% endif %}
+    </td>
   </tr>
   {% endfor %}
 </table>
