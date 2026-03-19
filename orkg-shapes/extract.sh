@@ -12,13 +12,13 @@ EXPORT=orkg-shapes.nt
 SOURCE_URL=http://orkg.org/orkg/
 
 # Install shaclgen from my fork
-pip install git+https://github.com/white-gecko/shaclgen@feature/extractClasses
+pip install git+https://github.com/white-gecko/shaclgen@feature/improvements
 
 MESSAGE="Update ORKG Shapes"
 LOG=""
 LOG="${LOG}"$( date '+%Y-%m-%d %H.%M.%S%z' )"\n"
 
-shaclgen ${GRAPH} -ns http://orkg.org/orkg/shapes/ orkgsh -p prefixes.json | rapper -i turtle - http://example.org/ > ${SHAPES}
+shaclgen ${GRAPH} -ns http://orkg.org/orkg/shapes/ orkgsh -p prefixes.json --output - | rapper -i turtle - http://example.org/ > ${SHAPES}
 docker run --rm --volume $PWD:/query --network data aksw/query http://fuseki:3030/orkg /query/${CLASSES_QUERY} -f nt > ${CLASSES}
 docker run --rm --volume $PWD:/query --network data aksw/query http://fuseki:3030/orkg /query/${PREDICATES_QUERY} -f nt > ${PREDICATES}
 
